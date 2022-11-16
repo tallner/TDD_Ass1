@@ -1,9 +1,9 @@
 # Use TDD to develop a library system
 
 ## Requirements
-- Borrow books at a cost -> BorrowService and PaymentService
-- Books can be rated and commented
-- Search for a book via books name, genre, writer, publicity date, rating
+- Borrow books at a cost -> BorrowRequest, BorrowService and PaymentService
+- Books can be rated and commented -> RatingService
+- Search for a book via books name, genre, writer, publicity date, rating -> SearchService
 - Keep track of books that are borrowed so they cant be borrowed
 
 ## För godkänt (G)
