@@ -1,0 +1,23 @@
+[
+  {
+    "name":"Book name 1",
+    "genre": "Drama",
+    "writer": "Joe",
+    "publicityDate": "2020-01-19",
+    "rating": "1"
+  },
+  {
+    "name":"Book name 2",
+    "genre": "Action",
+    "writer": "Cindy",
+    "publicityDate": "2002-01-19",
+    "rating": "2"
+  },
+  {
+    "name":"Book name 3",
+    "genre": "Adventure",
+    "writer": "Carl",
+    "publicityDate": "1999-10-29",
+    "rating": "3"
+  }
+]
