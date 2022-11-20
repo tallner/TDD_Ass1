@@ -7,11 +7,17 @@ import java.util.Iterator;
 
 public class SearchService {
 
+    private Book bookNotFound;
+    private DatabaseService databaseService;
 
-    public SearchService() {
+    public SearchService(DatabaseService databaseService) {
+        bookNotFound = new Book();
+        bookNotFound.setTitle("Not found");
+
+        this.databaseService = databaseService;
     }
 
-    public Book searchName(ArrayList<Book> books, String searchField){
+    public Book searchTitle(String searchField){
     /*    System.out.println(books.contains(searchField));
         for (Book item: books) {
             if (item.getName().equals(searchField))
@@ -20,46 +26,46 @@ public class SearchService {
         return null;
 */
 
-        Iterator<Book> iterator = books.iterator();
+        Iterator<Book> iterator = databaseService.readBooksFromDatabase().iterator();
         while (iterator.hasNext()) {
             Book currentBook = iterator.next();
-            if (currentBook.getName().equals(searchField)) {
+            if (currentBook.getTitle().equals(searchField)) {
                 return currentBook;
             }
         }
-        return null;
+        return bookNotFound;
     }
 
-    public Book searchGenre(ArrayList<Book> books, String searchField){
-        for (Book item: books) {
+    public Book searchGenre(String searchField){
+        for (Book item: databaseService.readBooksFromDatabase()) {
             if (item.getGenre().equals(searchField))
                 return item;
         }
-        return new Book();
+        return bookNotFound;
     }
 
-    public Book searchWriter(ArrayList<Book> books, String searchField){
-        for (Book item: books) {
+    public Book searchWriter(String searchField){
+        for (Book item: databaseService.readBooksFromDatabase()) {
             if (item.getWriter().equals(searchField))
                 return item;
         }
-        return new Book();
+        return bookNotFound;
     }
 
-    public Book searchPublicityDate(ArrayList<Book> books, String searchField){
-        for (Book item: books) {
+    public Book searchPublicityDate(String searchField){
+        for (Book item: databaseService.readBooksFromDatabase()) {
             if (item.getPublicityDate().equals(searchField))
                 return item;
         }
-        return new Book();
+        return bookNotFound;
     }
 
-    public Book searchRating(ArrayList<Book> books, String searchField){
-        for (Book item: books) {
+    public Book searchRating(String searchField){
+        for (Book item: databaseService.readBooksFromDatabase()) {
             if (item.getRating().equals(searchField))
                 return item;
         }
-        return new Book();
+        return bookNotFound;
     }
 
 

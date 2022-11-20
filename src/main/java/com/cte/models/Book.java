@@ -2,7 +2,6 @@ package com.cte.models;
 
 public class Book {
     private String title;
-    private String name;
     private String genre;
     private String writer;
     private String publicityDate;
@@ -11,8 +10,7 @@ public class Book {
 
     public Book(){}
 
-    public Book(String title, String name, String genre, String writer, String publicityDate, String rating, Boolean available) {
-        this.name = name;
+    public Book(String title, String genre, String writer, String publicityDate, String rating, Boolean available) {
         this.title = title;
         this.genre = genre;
         this.writer = writer;
@@ -27,14 +25,6 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getGenre() {
@@ -80,7 +70,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "name='" + name + '\'' +
+                "title='" + title + '\'' +
                 ", genre='" + genre + '\'' +
                 ", writer='" + writer + '\'' +
                 ", publicityDate='" + publicityDate + '\'' +
