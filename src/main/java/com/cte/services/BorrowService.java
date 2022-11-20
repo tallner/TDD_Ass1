@@ -21,4 +21,9 @@ public class BorrowService {
 
     }
 
+    public void bookOneBook(BorrowRequest borrowRequest) {
+        int amountToPay = 25;
+        paymentService.pay(amountToPay);
+
+    }
 }

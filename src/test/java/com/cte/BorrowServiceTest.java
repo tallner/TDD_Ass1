@@ -9,16 +9,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.internal.matchers.Any;
+import org.mockito.ArgumentCaptor;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BorrowServiceTest {
@@ -28,6 +25,7 @@ public class BorrowServiceTest {
     private SearchService searchService;
     private PaymentService paymentService;
     private DatabaseService databaseService;
+    ArgumentCaptor<Integer> payArgumentCaptor;
 
    // @Mock
    // BorrowService borrowService;
@@ -50,6 +48,7 @@ public class BorrowServiceTest {
         searchService = new SearchService(databaseService);
         borrowService = new BorrowService(searchService,paymentService);
 
+        payArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
 
     }
 
@@ -60,5 +59,29 @@ public class BorrowServiceTest {
         BorrowRequest borrowRequest = new BorrowRequest("title1");
 
         assertTrue(borrowService.checkAvailability(borrowRequest));
+    }
+
+    @Test
+    @DisplayName("Book a book and check that is unavailable")
+    public void bookingOfOneBookAndCheckItIsBooked(){
+        BorrowRequest borrowRequest = new BorrowRequest("title1");
+
+        borrowService.bookOneBook(borrowRequest);
+
+        assertFalse(borrowService.checkAvailability(borrowRequest));
+    }
+
+    @Test
+    @DisplayName("Book a book and check payment is ok")
+    public void bookingOfOneBookAndCheckItIsPayed(){
+        BorrowRequest borrowRequest = new BorrowRequest("title1");
+
+        borrowService.bookOneBook(borrowRequest);
+
+
+        verify(paymentService, times(1)).pay(payArgumentCaptor.capture());
+        int amountToPay = payArgumentCaptor.getValue();
+        // System.out.println(amountToPay);
+        assertEquals(150, amountToPay);
     }
 }
