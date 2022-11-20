@@ -1,4 +1,4 @@
-package Models;
+package com.cte.models;
 
 public class Book {
     private String title;
@@ -7,16 +7,18 @@ public class Book {
     private String writer;
     private String publicityDate;
     private String rating;
+    private Boolean available;
 
     public Book(){}
 
-    public Book(String title, String name, String genre, String writer, String publicityDate, String rating) {
+    public Book(String title, String name, String genre, String writer, String publicityDate, String rating, Boolean available) {
         this.name = name;
         this.title = title;
         this.genre = genre;
         this.writer = writer;
         this.publicityDate = publicityDate;
         this.rating = rating;
+        this.available = available;
     }
 
     public String getTitle() {
@@ -65,6 +67,14 @@ public class Book {
 
     public void setRating(String rating) {
         this.rating = rating;
+    }
+
+    public Boolean getAvailability() {
+        return available;
+    }
+
+    public void setAvailability(Boolean rating) {
+        this.available = available;
     }
 
     @Override
