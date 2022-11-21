@@ -5,6 +5,7 @@ import com.cte.services.BorrowService;
 import com.cte.services.DatabaseService;
 import com.cte.services.PaymentService;
 import com.cte.services.SearchService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -32,7 +38,11 @@ public class BorrowServiceTest {
 
 
     @BeforeEach
-    public void  setUp() {
+    public void  setUp() throws IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        String filePath = "src/main/resources/BookDatabase.json";
+        List<Book> books = Arrays.asList(mapper.readValue(Paths.get(filePath).toFile(), Book[].class));
 
         bookArrayList = new ArrayList<>();
         bookArrayList.add(new Book("title1","Book genre","Book writer","Book publicity date","Book rating",4,true));
@@ -43,7 +53,7 @@ public class BorrowServiceTest {
         paymentService = mock(PaymentService.class);
         databaseService = mock(DatabaseService.class);
 
-        when(databaseService.readBooksFromDatabase()).thenReturn(bookArrayList);
+        when(databaseService.readBooksFromDatabase()).thenReturn(books);
 
         searchService = new SearchService(databaseService);
         borrowService = new BorrowService(searchService,paymentService);

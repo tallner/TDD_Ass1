@@ -1,23 +1,47 @@
 [
   {
-    "title":"Book name 1",
-    "genre": "Drama",
-    "writer": "Joe",
-    "publicityDate": "2020-01-19",
-    "rating": "1"
+    "title":"title1",
+    "genre":"Book genre",
+    "writer":"Book writer",
+    "publicityDate":"Book publicity date",
+    "rating":"Book rating",
+    "price":"4",
+    "availability":"true"
   },
   {
-    "title":"Book name 2",
-    "genre": "Action",
-    "writer": "Cindy",
-    "publicityDate": "2002-01-19",
-    "rating": "2"
+    "title":"title2",
+    "genre":"drama",
+    "writer":"jonas",
+    "publicityDate":"2020-02-19",
+    "rating":"6",
+    "price":"34",
+    "availability":"true"
   },
   {
-    "title":"Book name 3",
-    "genre": "Adventure",
-    "writer": "Carl",
-    "publicityDate": "1999-10-29",
-    "rating": "3"
+    "title":"title2",
+    "genre":"action",
+    "writer":"amanda",
+    "publicityDate":"2020-02-19",
+    "rating":"9",
+    "price":"378",
+    "availability":"true"
+  },
+  {
+    "title":"title2",
+    "genre":"fantasy",
+    "writer":"darwin",
+    "publicityDate":"2020-02-19",
+    "rating":"2",
+    "price":"88",
+    "availability":"true"
+  },
+  {
+    "title":"title2",
+    "genre":"biography",
+    "writer":"joe",
+    "publicityDate":"2020-02-19",
+    "rating":"3",
+    "price":"65",
+    "availability":"true"
   }
 ]
