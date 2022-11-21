@@ -1,15 +1,16 @@
 package com.cte;
 
-import com.cte.models.Book;
 import com.cte.services.BorrowService;
 import com.cte.services.DatabaseService;
 import com.cte.services.PaymentService;
 import com.cte.services.SearchService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
@@ -36,44 +37,61 @@ public class BorrowServiceTest {
         testData = new TestData();
 
         paymentService = mock(PaymentService.class);
-        databaseService = mock(DatabaseService.class);
 
-        when(databaseService.readBooksFromDatabase()).thenReturn(testData.getTestData());
-
-        searchService = new SearchService(databaseService);
+        searchService = mock(SearchService.class);
         borrowService = new BorrowService(searchService,paymentService);
 
         payArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
 
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("Test if book is bookable")
-    public void bookingIsPossibleIfBookAvailable(){
-        BorrowRequest borrowRequest = new BorrowRequest("title1");
-
+    @ValueSource(strings = "title1")
+    public void bookingIsPossibleIfBookAvailable(String title) throws IOException {
+        BorrowRequest borrowRequest = new BorrowRequest(title);
+        when(searchService.searchTitle(title)).thenReturn(testData.getTestData().get(0));
         assertTrue(borrowService.checkAvailability(borrowRequest));
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("Book a book and check that is unavailable")
-    public void bookingOfOneBookAndCheckItIsBooked(){
-        BorrowRequest borrowRequest = new BorrowRequest("title1");
+    @ValueSource(strings = "title1")
+    public void bookingOfOneBookAndCheckItIsBooked(String title) throws IOException {
+        BorrowRequest borrowRequest = new BorrowRequest(title);
+        when(searchService.searchTitle(title)).thenReturn(testData.getTestData().get(0));
+        String expected = "Book borrowed";
+        String actual = borrowService.bookOneBook(borrowRequest);
 
-        borrowService.bookOneBook(borrowRequest);
-
-        assertFalse(borrowService.checkAvailability(borrowRequest));
+        assertEquals(expected,actual);
     }
 
-    @Test
-    @DisplayName("Book a book and check payment is ok")
-    public void bookingOfOneBookAndCheckItIsPayed(){
-        BorrowRequest borrowRequest = new BorrowRequest("title1");
+    @ParameterizedTest
+    @DisplayName("Book an unavailable book should not work")
+    @ValueSource(strings = "title5")
+    public void bookingOfAnUnavailableBook(String title) throws IOException {
+        BorrowRequest borrowRequest = new BorrowRequest(title);
+        when(searchService.searchTitle(title)).thenReturn(testData.getTestData().get(4));
 
+        String expected = "Book not available";
+        String actual = borrowService.bookOneBook(borrowRequest);
+
+        assertEquals(expected,actual);
+    }
+
+    @ParameterizedTest
+    @DisplayName("Book a book and check payment is sent to paymentService")
+    @ValueSource(strings = "title1")
+    public void bookingOfOneBookAndCheckCorrectAmountSentToPayment(String title) throws IOException {
+        BorrowRequest borrowRequest = new BorrowRequest(title);
+        when(searchService.searchTitle(title)).thenReturn(testData.getTestData().get(0));
         borrowService.bookOneBook(borrowRequest);
 
         verify(paymentService, times(1)).pay(payArgumentCaptor.capture());
-        int amountToPay = payArgumentCaptor.getValue();
-        assertEquals(4, amountToPay);
+
+        int expected = testData.getTestData().get(0).getPrice();
+        int actual = payArgumentCaptor.getValue();
+
+        assertEquals(expected, actual);
     }
 }

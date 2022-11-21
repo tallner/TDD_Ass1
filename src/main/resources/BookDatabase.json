@@ -18,7 +18,7 @@
     "availability":"true"
   },
   {
-    "title":"title2",
+    "title":"title3",
     "genre":"action",
     "writer":"amanda",
     "publicityDate":"2020-02-19",
@@ -27,7 +27,7 @@
     "availability":"true"
   },
   {
-    "title":"title2",
+    "title":"title4",
     "genre":"fantasy",
     "writer":"darwin",
     "publicityDate":"2020-02-19",
@@ -36,12 +36,12 @@
     "availability":"true"
   },
   {
-    "title":"title2",
+    "title":"title5",
     "genre":"biography",
     "writer":"joe",
     "publicityDate":"2020-02-19",
     "rating":"3",
     "price":"65",
-    "availability":"true"
+    "availability":"false"
   }
 ]
