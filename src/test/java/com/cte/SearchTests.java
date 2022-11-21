@@ -4,11 +4,16 @@ import com.cte.models.Book;
 import com.cte.services.DatabaseService;
 import com.cte.services.DatabaseService;
 import com.cte.services.SearchService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.doubleThat;
@@ -20,23 +25,15 @@ public class SearchTests {
 
     private SearchService searchService;
     private DatabaseService databaseService;
-    private ArrayList<Book> bookArrayList;
+    private TestData testData;
 
     @BeforeEach
-    public void  setUp() {
+    public void  setUp() throws IOException {
 
-
-        bookArrayList = new ArrayList<>();
-        bookArrayList.add(new Book("title1","Book genre","Book writer","Book publicity date","Book rating",4,true));
-        bookArrayList.add(new Book("title2","Drama","Joe2","2020-02-19","2",55,true));
-        bookArrayList.add(new Book("title3","Drama","Joe3","2020-03-19","3",34,true));
-        bookArrayList.add(new Book("title4","Drama","Joe4","2020-04-19","4",12,true));
-
-
-
+        testData = new TestData();
 
         databaseService = mock(DatabaseService.class);
-        when(databaseService.readBooksFromDatabase()).thenReturn(bookArrayList);
+        when(databaseService.readBooksFromDatabase()).thenReturn(testData.getTestData());
 
         searchService = new SearchService(databaseService);
 
