@@ -6,16 +6,20 @@ public class Book {
     private String writer;
     private String publicityDate;
     private String rating;
+    private int price;
     private Boolean available;
 
     public Book(){}
 
-    public Book(String title, String genre, String writer, String publicityDate, String rating, Boolean available) {
+    public Book(String title, String genre, String writer,
+                String publicityDate, String rating,
+                int price, Boolean available) {
         this.title = title;
         this.genre = genre;
         this.writer = writer;
         this.publicityDate = publicityDate;
         this.rating = rating;
+        this.price = price;
         this.available = available;
     }
 
@@ -59,11 +63,19 @@ public class Book {
         this.rating = rating;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public Boolean getAvailability() {
         return available;
     }
 
-    public void setAvailability(Boolean rating) {
+    public void setAvailability(Boolean available) {
         this.available = available;
     }
 

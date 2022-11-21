@@ -14,16 +14,23 @@ public class BorrowService {
       this.paymentService = paymentService;
     }
 
-    public boolean checkAvailability(BorrowRequest borrowRequest) {
+    public Boolean checkAvailability(BorrowRequest borrowRequest) {
         Book book = searchService.searchTitle(borrowRequest.getTitle());
 
-        return book.getTitle()==borrowRequest.getTitle();
-
+        return book.getAvailability();
     }
 
     public void bookOneBook(BorrowRequest borrowRequest) {
-        int amountToPay = 25;
-        paymentService.pay(amountToPay);
+        Book book = searchService.searchTitle(borrowRequest.getTitle());
+        if (book.getAvailability()==true){
+            book.setAvailability(false);
+            paymentService.pay(book.getPrice());
+            System.out.println("book borrowed");
+        }
+        else {
+            System.out.println("not available");
+        }
+
 
     }
 }

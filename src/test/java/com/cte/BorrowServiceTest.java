@@ -35,10 +35,10 @@ public class BorrowServiceTest {
     public void  setUp() {
 
         bookArrayList = new ArrayList<>();
-        bookArrayList.add(new Book("title1","Book genre","Book writer","Book publicity date","Book rating",true));
-        bookArrayList.add(new Book("title2","Drama","Joe2","2020-02-19","2",true));
-        bookArrayList.add(new Book("title3","Drama","Joe3","2020-03-19","3",true));
-        bookArrayList.add(new Book("title4","Drama","Joe4","2020-04-19","4",true));
+        bookArrayList.add(new Book("title1","Book genre","Book writer","Book publicity date","Book rating",4,true));
+        bookArrayList.add(new Book("title2","Drama","Joe2","2020-02-19","2",55,true));
+        bookArrayList.add(new Book("title3","Drama","Joe3","2020-03-19","3",34,true));
+        bookArrayList.add(new Book("title4","Drama","Joe4","2020-04-19","4",12,true));
 
         paymentService = mock(PaymentService.class);
         databaseService = mock(DatabaseService.class);
@@ -51,7 +51,6 @@ public class BorrowServiceTest {
         payArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
 
     }
-
 
     @Test
     @DisplayName("Test if book is bookable")
@@ -78,10 +77,8 @@ public class BorrowServiceTest {
 
         borrowService.bookOneBook(borrowRequest);
 
-
         verify(paymentService, times(1)).pay(payArgumentCaptor.capture());
         int amountToPay = payArgumentCaptor.getValue();
-        // System.out.println(amountToPay);
-        assertEquals(150, amountToPay);
+        assertEquals(4, amountToPay);
     }
 }
