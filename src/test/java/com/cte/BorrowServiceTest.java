@@ -9,8 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
@@ -21,28 +20,20 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class BorrowServiceTest {
 
-    private BorrowService borrowService;
-    private SearchService searchService;
-    private PaymentService paymentService;
-    private DatabaseService databaseService;
     private TestData testData;
-    ArgumentCaptor<Integer> payArgumentCaptor;
 
-   // @Mock
-   // BorrowService borrowService;
-
+    @Mock
+    private SearchService searchService;
+    @Mock
+    private PaymentService paymentService;
+    @InjectMocks
+    private BorrowService borrowService;
+    @Captor
+    private ArgumentCaptor<Integer> payArgumentCaptor;
 
     @BeforeEach
-    public void  setUp() throws IOException {
+    public void  setUp() {
         testData = new TestData();
-
-        paymentService = mock(PaymentService.class);
-
-        searchService = mock(SearchService.class);
-        borrowService = new BorrowService(searchService,paymentService);
-
-        payArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
-
     }
 
     @ParameterizedTest
