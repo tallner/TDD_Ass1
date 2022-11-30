@@ -13,4 +13,4 @@
 ## För väl godkänt (VG)
 - Leverera ett fungerande projekt där alla funktioner är testade
 - Demonstrera en djup förståelse för testning
-- Skriv ett kort en-sidigt dokument på hur ni upplevt att utveckla med testdriven utveckling
+- Skriv ett kort ensidigt dokument på hur ni upplevt att utveckla med testdriven utveckling
